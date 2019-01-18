@@ -1,0 +1,81 @@
+Message Format:
+{
+	"type": <device type>,
+	"commandType": <command type>,
+	"command": <command to execute on>,
+	"data": <data corresponding to the command>
+}
+
+Commands Recieved by Client
+
+Type: GMSC
+	Description: 
+		Contains all commands that correspond with gemsec server communication.
+	Command: STRT
+		Data:
+			NULL
+		Function:
+			Request the server to begin sending gemsec data to the client device.
+		Result: 
+			The server will begin sending gemsec data to the client via the main connection socket.
+	Command: STOP
+		Data:
+			NULL
+		Function:
+			Notify the server to stop sending gemsec data.
+		Result:
+			The server will stop sending gemsec data to the client.
+	Command: CONT
+		Data:
+			NULL
+		Function: 
+			Notify the server to continue sending gemsec commands.
+		Result:
+			The server will continue to send the next gemsec command.
+	Command: GCFC
+		Data:
+			Command to send to gemsec server from the client.
+		Function:
+			Notify the server to send the gemsec command specified in the data field to the gemsec server.
+		Result:
+			The server will send the command to the gemsec server and then continue to send the next command to the client.
+Type: DNLD
+	Description:
+		Contains commands associated with downloading files to the client from the server.
+	Command: PRJD
+		Data:
+			Contains the project file name to download.
+		Function:
+			Request the server to send the requested project file.
+		Result:
+			If the requested file exists:
+				The server will create a new socket for the download and send the socket information to the client.
+			If the requested file does not exist:
+				The server will respond to the client that the file does not exist.
+	Command: ASTD
+		Data:
+			Contains the file name of the asset to download.
+		Function:
+			Request the server to send the requested asset file.
+		Result:
+			If the requested file exists:
+				The server will create a new socket for the download and send the socket information to the client.
+			If the requested file does not exist:
+				The server will respond to the client that the file does not exist.
+	Command: CONT
+		Data:
+			NULL
+		Function:
+			Notify the server that the client is ready to recieve the file.
+		Result:
+			The server will begin sending the file to the client.
+	Command: STOP
+		Data:
+			NULL
+		Function:
+			Notify the server that the client no longer wants to recieve the file.
+		Result:
+			The server will cancel sending the file and close the download connection.
+			
+		
+	
